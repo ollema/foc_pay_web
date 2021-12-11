@@ -14,10 +14,8 @@ env = environ.Env()
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = env.bool("DJANGO_DEBUG", False)
-# Local time zone. Choices are
-# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
+# Local time zone. Choices are http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # though not all of them may be available with every OS.
-# In Windows, this must be set to your system time zone.
 TIME_ZONE = "Europe/Stockholm"
 # https://docs.djangoproject.com/en/dev/ref/settings/#language-code
 LANGUAGE_CODE = "en-us"
@@ -35,10 +33,7 @@ LOCALE_PATHS = [str(ROOT_DIR / "locale")]
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-
-DATABASES = {
-    "default": env.db("DATABASE_URL", default="postgres:///foc_pay_web"),
-}
+DATABASES = {"default": env.db("DATABASE_URL", default="postgres:///foc_pay_web")}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 # https://docs.djangoproject.com/en/stable/ref/settings/#std:setting-DEFAULT_AUTO_FIELD
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
@@ -78,7 +73,6 @@ LOCAL_APPS = [
     "foc_pay_web.users",
     "foc_pay_web.payments",
     "foc_pay_web.focumama",
-    # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -227,15 +221,14 @@ EMAIL_TIMEOUT = 5
 # Django Admin URL.
 ADMIN_URL = "admin/"
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
-ADMINS = [("""Foc""", "foc@focpay.xyz")]
+ADMINS = [("Focumateriet", "foc@focpay.xyz")]  # TODO: update
 # https://docs.djangoproject.com/en/dev/ref/settings/#managers
 MANAGERS = ADMINS
 
 # LOGGING
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#logging
-# See https://docs.djangoproject.com/en/dev/topics/logging for
-# more details on how to customize your logging configuration.
+# See https://docs.djangoproject.com/en/dev/topics/logging for more details on how to customize logging.
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -249,7 +242,6 @@ LOGGING = {
     },
     "root": {"level": "INFO", "handlers": ["console"]},
 }
-
 
 # django-allauth
 # ------------------------------------------------------------------------------
@@ -278,5 +270,3 @@ REST_FRAMEWORK = {
 
 # django-cors-headers - https://github.com/adamchainz/django-cors-headers#setup
 CORS_URLS_REGEX = r"^/api/.*$"
-# Your stuff...
-# ------------------------------------------------------------------------------

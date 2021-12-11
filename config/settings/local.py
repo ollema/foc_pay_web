@@ -6,10 +6,7 @@ from .base import env
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
-SECRET_KEY = env(
-    "DJANGO_SECRET_KEY",
-    default="Sv0OcU5s5P8ftCF2NCNdMo8eyDdwIAToiitVSTRh6sxKeADMUBcEtMUjM0HREI9X",
-)
+SECRET_KEY = env("DJANGO_SECRET_KEY", default="Sv0OcU5s5P8ftCF2NCNdMo8eyDdwIAToiitVSTRh6sxKeADMUBcEtMUjM0HREI9X")
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1"]
 
@@ -33,7 +30,6 @@ EMAIL_BACKEND = env("DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.c
 # http://whitenoise.evans.io/en/latest/django.html#using-whitenoise-in-development
 INSTALLED_APPS = ["whitenoise.runserver_nostatic"] + INSTALLED_APPS  # noqa F405
 
-
 # django-debug-toolbar
 # ------------------------------------------------------------------------------
 # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html#prerequisites
@@ -48,11 +44,7 @@ DEBUG_TOOLBAR_CONFIG = {
 # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html#internal-ips
 INTERNAL_IPS = ["127.0.0.1", "10.0.2.2"]
 
-
 # django-extensions
 # ------------------------------------------------------------------------------
 # https://django-extensions.readthedocs.io/en/latest/installation_instructions.html#configuration
 INSTALLED_APPS += ["django_extensions"]  # F405
-
-# Your stuff...
-# ------------------------------------------------------------------------------
