@@ -6,22 +6,10 @@ from pathlib import Path
 if __name__ == "__main__":
 
     certs = [
-        (
-            "SWISH_PROD_CERT",
-            ".certs/prod/cert.pem",
-        ),
-        (
-            "SWISH_PROD_KEY",
-            ".certs/prod/swish.key",
-        ),
-        (
-            "SWISH_TEST_CERT",
-            ".certs/test/cert.pem",
-        ),
-        (
-            "SWISH_TEST_KEY",
-            ".certs/test/swish.key",
-        ),
+        ("SWISH_PROD_CERT", ".certs/prod/cert.pem"),
+        ("SWISH_PROD_KEY", ".certs/prod/swish.key"),
+        ("SWISH_TEST_CERT", ".certs/test/cert.pem"),
+        ("SWISH_TEST_KEY", ".certs/test/swish.key"),
     ]
 
     for cert_env_name, cert_file_path in certs:
@@ -44,9 +32,8 @@ if __name__ == "__main__":
             import django  # noqa
         except ImportError:
             raise ImportError(
-                "Couldn't import Django. Are you sure it's installed and "
-                "available on your PYTHONPATH environment variable? Did you "
-                "forget to activate a virtual environment?"
+                "Couldn't import Django. Are you sure it's installed and available on your PYTHONPATH environment "
+                "variable? Did you forget to activate a virtual environment?"
             )
 
         raise
