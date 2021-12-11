@@ -273,6 +273,6 @@ foc_pay_web/media/
 
 .pytest_cache/
 .env
-.envs/*
 
+### virtaul env
 focpay_venv
