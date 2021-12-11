@@ -10,11 +10,6 @@ mypy==0.910  # https://github.com/python/mypy
 django-stubs==1.9.0  # https://github.com/typeddjango/django-stubs
 djangorestframework-stubs==1.4.0  # https://github.com/typeddjango/djangorestframework-stubs
 
-# Documentation
-# ------------------------------------------------------------------------------
-sphinx==4.3.1  # https://github.com/sphinx-doc/sphinx
-sphinx-autobuild==2021.3.14 # https://github.com/GaretJax/sphinx-autobuild
-
 # Code quality
 # ------------------------------------------------------------------------------
 flake8==4.0.1  # https://github.com/PyCQA/flake8
@@ -26,6 +21,5 @@ pre-commit==2.16.0  # https://github.com/pre-commit/pre-commit
 # Django
 # ------------------------------------------------------------------------------
 factory-boy==3.2.1  # https://github.com/FactoryBoy/factory_boy
-
 django-debug-toolbar==3.2.2  # https://github.com/jazzband/django-debug-toolbar
 django-extensions==3.1.5  # https://github.com/django-extensions/django-extensions

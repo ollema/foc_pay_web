@@ -28,8 +28,4 @@ def update_status(request: HttpRequest, payment_id: str) -> response:
     except ObjectDoesNotExist:
         print(f"error: was asked to update {payment_id} but could not find it in db")
 
-    return render(
-        request,
-        "payments/swish_payment_status.html",
-        context={"payment": database_payment},
-    )
+    return render(request, "payments/swish_payment_status.html", context={"payment": database_payment})
