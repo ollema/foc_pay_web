@@ -7,7 +7,11 @@ repos:
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
+      - id: check-json
+      - id: check-toml
       - id: check-yaml
+      - id: detect-private-key
+      - id: check-shebang-scripts-are-executable
 
   - repo: https://github.com/psf/black
     rev: 21.12b0
@@ -24,6 +28,11 @@ repos:
     hooks:
       - id: flake8
         args: ["--config=setup.cfg"]
+
+  - repo: https://github.com/asottile/yesqa
+    rev: v1.3.0
+    hooks:
+    -   id: yesqa
 
 # sets up .pre-commit-ci.yaml to ensure pre-commit dependencies stay up to date
 ci:
