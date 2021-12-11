@@ -1,7 +1,6 @@
 import logging
 from typing import Union
 
-from django.contrib import messages
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from swish import SwishError
@@ -15,6 +14,7 @@ payment_handler = PaymentHandler(production=True)
 
 logger = logging.getLogger(__name__)
 
+
 def payment_form(request: HttpRequest) -> response:
     if request.method == "POST":
         form = FocumamaForm(request.POST)
@@ -23,6 +23,7 @@ def payment_form(request: HttpRequest) -> response:
     else:
         form = FocumamaForm()
     return render(request, "focumama/form.html", {"form": form})
+
 
 def _create_payment(request: HttpRequest, raw_payer_alias: str) -> response:
     payer_alias = int("46" + raw_payer_alias[1:])  # Replace 0 with 46

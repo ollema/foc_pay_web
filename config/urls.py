@@ -8,9 +8,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
-    path(
-        "about/", TemplateView.as_view(template_name="pages/about.html"), name="about"
-    ),
+    path("about/", TemplateView.as_view(template_name="pages/about.html"), name="about"),
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
@@ -18,7 +16,7 @@ urlpatterns = [
     # path("users/", include("foc_pay_web.users.urls", namespace="users")),
     # path("accounts/", include("allauth.urls")),
     path("payments/", include("foc_pay_web.payments.urls", namespace="payments")),
-    path("focumama/", include("foc_pay_web.focumama.urls", namespace="focumama"))
+    path("focumama/", include("foc_pay_web.focumama.urls", namespace="focumama")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # API URLS
