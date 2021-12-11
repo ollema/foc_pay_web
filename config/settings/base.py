@@ -81,6 +81,8 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "foc_pay_web.users",
+    "foc_pay_web.payments",
+    "foc_pay_web.focumama",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

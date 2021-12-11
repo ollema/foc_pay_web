@@ -17,6 +17,7 @@ urlpatterns = [
     # TODO: add user/account URLs when needed in the future
     # path("users/", include("foc_pay_web.users.urls", namespace="users")),
     # path("accounts/", include("allauth.urls")),
+    path("focumama/", include("foc_pay_web.focumama.urls", namespace="focumama"))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # API URLS
