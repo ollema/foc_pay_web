@@ -1,6 +1,7 @@
 import swish
 from django.conf import settings
 from django.shortcuts import get_object_or_404
+from django.urls import reverse
 
 from foc_pay_web.payments.models import Payment
 
@@ -35,13 +36,14 @@ class PaymentHandler:
         amount: int,
         machine_name: str,
     ) -> Payment:
-        print(f"https://{settings.ALLOWED_HOSTS[0]}" + "{{ % url 'payments:swish_callback' %}}")
+        print(f"https://{settings.ALLOWED_HOSTS[0]}{reverse('payments:swish_callback')}")
         payment = self.client.create_payment(
             amount=amount,
             currency=CURRENCY,
             callback_url="https://google.com"
             if settings.DEBUG
-            else f"https://{settings.ALLOWED_HOSTS[0]}" + "{{ % url 'payments:swish_callback' %}}",
+            else f"https://{settings.ALLOWED_HOSTS[0]}{reverse('payments:swish_callback')}"
+            + "{{ % url 'payments:swish_callback' %}}",
             message=MESSAGE,
             payer_alias=payer_alias,
         )
