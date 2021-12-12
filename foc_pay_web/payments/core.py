@@ -64,8 +64,9 @@ class PaymentHandler:
         database_payment: Payment = get_object_or_404(Payment, pk=payment_id)
         swish_payment = self.client.get_payment(payment_request_id=payment_id)
 
-        # never update payment status if it has been credited once
-        if not database_payment.status == Payment.STATUS.credited:
+        # don't update payment status in db if payment has been credited already
+        if database_payment.status != Payment.STATUS.credited:
+            # don't update payment status in db if no update is needed
             if swish_payment.status.lower() != database_payment.status:
                 if swish_payment.status == "PAID":
                     database_payment.status = Payment.STATUS.paid
