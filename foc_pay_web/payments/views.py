@@ -27,6 +27,7 @@ def _payment_form(request: HttpRequest, machine_name: str) -> response:
                 payment = payment_handler.create_payment(
                     payer_alias=payer_alias,
                     amount=10,  # TODO: take from heroku config
+                    machine_name=machine_name,
                 )
             except SwishError as e:
                 logger.error(e.error_message)
@@ -51,11 +52,11 @@ def _payment_form(request: HttpRequest, machine_name: str) -> response:
 
 
 def focumama_payment_form(request: HttpRequest) -> response:
-    return _payment_form(request, machine_name="Focumama")
+    return _payment_form(request, machine_name=Payment.MACHINES.focumama)
 
 
 def drickomaten_payment_form(request: HttpRequest) -> response:
-    return _payment_form(request, machine_name="Drickomaten")
+    return _payment_form(request, machine_name=Payment.MACHINES.drickomaten)
 
 
 def get_payment(request: HttpRequest, payment_id: str) -> response:

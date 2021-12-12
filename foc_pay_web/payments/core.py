@@ -32,6 +32,7 @@ class PaymentHandler:
         self,
         payer_alias: int,
         amount: int,
+        machine_name: str,
     ) -> Payment:
         payment = self.client.create_payment(
             amount=amount,
@@ -46,6 +47,7 @@ class PaymentHandler:
             payment_id=payment.id,
             payer_alias=int(payment.payer_alias),
             amount=int(payment.amount),
+            machine=machine_name,
         )
 
     def update_payment_status(

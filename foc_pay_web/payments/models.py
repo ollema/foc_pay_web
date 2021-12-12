@@ -14,6 +14,13 @@ class Payment(StatusModel):
         ("cancelled", _("Cancelled")),
     )
 
+    MACHINES = Choices(
+        ("", _("None")),
+        ("focumama", _("Focumama")),
+        ("drickomaten", _("Drickomaten")),
+    )
+
     payment_id = models.CharField(max_length=100, primary_key=True)
     payer_alias = models.CharField(max_length=20)
     amount = models.CharField(max_length=10)
+    machine = models.CharField(max_length=20, blank=True, choices=MACHINES, default="")
