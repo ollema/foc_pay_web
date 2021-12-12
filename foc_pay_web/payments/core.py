@@ -36,14 +36,15 @@ class PaymentHandler:
         amount: int,
         machine_name: str,
     ) -> Payment:
-        print(f"https://{settings.ALLOWED_HOSTS[0]}{reverse('payments:swish_callback')}")
+        debug_callback_url = "https://google.com"
+        prod_callback_url = f"https://{settings.ALLOWED_HOSTS[0]}{reverse('payments:swish_callback')}"
+        callback_url = debug_callback_url if settings.DEBUG else prod_callback_url
+        print(f"{callback_url=}")
+
         payment = self.client.create_payment(
             amount=amount,
             currency=CURRENCY,
-            callback_url="https://google.com"
-            if settings.DEBUG
-            else f"https://{settings.ALLOWED_HOSTS[0]}{reverse('payments:swish_callback')}"
-            + "{{ % url 'payments:swish_callback' %}}",
+            callback_url=callback_url,
             message=MESSAGE,
             payer_alias=payer_alias,
         )
