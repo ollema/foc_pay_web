@@ -6,5 +6,4 @@ Foc Pay Web Server
 
 
 ### TODO
-* fixa swish callback
 * städa upp payments/core.py
