@@ -35,6 +35,7 @@ class PaymentHandler:
         amount: int,
         machine_name: str,
     ) -> Payment:
+        print(f"https://{settings.ALLOWED_HOSTS[0]}" + "{{ % url 'payments:swish_callback' %}}")
         payment = self.client.create_payment(
             amount=amount,
             currency=CURRENCY,
