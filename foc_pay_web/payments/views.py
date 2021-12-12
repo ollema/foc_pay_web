@@ -23,7 +23,7 @@ response = Union[HttpResponse, HttpResponseRedirect]
 
 logger = logging.getLogger(__name__)
 
-payment_handler = PaymentHandler(production=False)
+payment_handler = PaymentHandler(production=True)
 
 
 def _payment_form(request: HttpRequest, machine_name: str) -> response:
@@ -34,7 +34,7 @@ def _payment_form(request: HttpRequest, machine_name: str) -> response:
             try:
                 payment = payment_handler.create_payment(
                     payer_alias=payer_alias,
-                    amount=10,  # TODO: take from heroku config
+                    amount=1,  # TODO: take from heroku config
                     machine_name=machine_name,
                 )
             except SwishError as e:
