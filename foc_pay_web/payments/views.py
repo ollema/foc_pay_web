@@ -3,7 +3,7 @@ from typing import Union
 
 from django.contrib import messages
 from django.http.request import HttpRequest
-from django.http.response import HttpResponse, HttpResponseRedirect
+from django.http.response import Http404, HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from swish import SwishError
 
@@ -65,5 +65,8 @@ def get_payment(request: HttpRequest, payment_id: str) -> response:
 
 def update_payment_status(request: HttpRequest, payment_id: str) -> response:
     payment_handler.update_payment_status(payment_id)
-    payment = get_object_or_404(Payment, pk=payment_id)
-    return render(request, "payments/payment_status.html", context={"payment": payment})
+    try:
+        payment = get_object_or_404(Payment, pk=payment_id)
+        return render(request, "payments/payment_status.html", context={"payment": payment})
+    except Http404:
+        return HttpResponseNotFound()
