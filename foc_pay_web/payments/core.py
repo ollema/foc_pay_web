@@ -64,14 +64,16 @@ class PaymentHandler:
         database_payment: Payment = get_object_or_404(Payment, pk=payment_id)
         swish_payment = self.client.get_payment(payment_request_id=payment_id)
 
-        if swish_payment.status.lower() != database_payment.STATUS:
-            if swish_payment.status == "PAID":
-                database_payment.status = Payment.STATUS.paid
-            elif swish_payment.status == "DECLINED":
-                database_payment.status = Payment.STATUS.declined
-            elif swish_payment.status == "ERROR":
-                database_payment.status = Payment.STATUS.error
-            elif swish_payment.status == "CANCELLED":
-                database_payment.status = Payment.STATUS.cancelled
+        # never update payment status if it has been credited once
+        if not database_payment.status == Payment.STATUS.credited:
+            if swish_payment.status.lower() != database_payment.status:
+                if swish_payment.status == "PAID":
+                    database_payment.status = Payment.STATUS.paid
+                elif swish_payment.status == "DECLINED":
+                    database_payment.status = Payment.STATUS.declined
+                elif swish_payment.status == "ERROR":
+                    database_payment.status = Payment.STATUS.error
+                elif swish_payment.status == "CANCELLED":
+                    database_payment.status = Payment.STATUS.cancelled
 
-            database_payment.save()
+                database_payment.save()
