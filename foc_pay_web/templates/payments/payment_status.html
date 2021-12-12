@@ -1,0 +1,11 @@
+{% load payment_extras %}
+
+</h3><div class="payment-status">
+    <table class="table table-sm table-responsive-sm table-borderless table-hover">
+        <tr><td>payment_id:</td><td>{{ payment.payment_id }}</td></tr>
+        <tr><td>status:</td><td>{{ payment.status | upper }}</td></tr>
+        <tr><td>status_updated:</td><td>{{ payment.status_changed | date:"Y-m-d H:i:s" }}</td></tr>
+        <tr><td>phone_number:</td><td>{{ payment.payer_alias | clean_phone_number }}</td></tr>
+        <tr><td>amount:</td><td>{{ payment.amount }} kr</td></tr>
+    </table>
+</div>

@@ -6,6 +6,8 @@ from django.views import defaults as default_views
 from django.views.generic import TemplateView
 from rest_framework.authtoken.views import obtain_auth_token
 
+from foc_pay_web.payments.views import drickomaten_payment_form, focumama_payment_form
+
 urlpatterns = [
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
     path("about/", TemplateView.as_view(template_name="pages/about.html"), name="about"),
@@ -15,8 +17,9 @@ urlpatterns = [
     # TODO: add user/account URLs when needed in the future
     # path("users/", include("foc_pay_web.users.urls", namespace="users")),
     # path("accounts/", include("allauth.urls")),
+    path("focumama/", view=focumama_payment_form, name="focumama"),
+    path("drickomaten/", view=drickomaten_payment_form, name="drickomaten"),
     path("payments/", include("foc_pay_web.payments.urls", namespace="payments")),
-    path("focumama/", include("foc_pay_web.focumama.urls", namespace="focumama")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # API URLS

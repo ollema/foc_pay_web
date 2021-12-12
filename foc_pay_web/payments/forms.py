@@ -3,7 +3,7 @@ from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 
 
-class FocumamaForm(forms.Form):
+class PaymentForm(forms.Form):
     phone_regex = RegexValidator(
         regex=r"^07\d{8}$",
         message=_("Telefonnumret måste ges i följande format: '07XXXXXXXX'"),

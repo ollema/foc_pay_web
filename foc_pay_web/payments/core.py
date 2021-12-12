@@ -58,16 +58,19 @@ class PaymentHandler:
 
         try:
             database_payment: Payment = Payment.objects.get(pk=payment_id)
-            if swish_payment.status == "PAID":
-                database_payment.status = Payment.STATUS.paid
-            elif swish_payment.status == "DECLINED":
-                database_payment.status = Payment.STATUS.declined
-            elif swish_payment.status == "ERROR":
-                database_payment.status = Payment.STATUS.error
-            elif swish_payment.status == "CANCELLED":
-                database_payment.status = Payment.STATUS.cancelled
 
-            database_payment.save()
+            if swish_payment.status.lower() != database_payment.STATUS:
+                if swish_payment.status == "PAID":
+                    database_payment.status = Payment.STATUS.paid
+                elif swish_payment.status == "DECLINED":
+                    database_payment.status = Payment.STATUS.declined
+                elif swish_payment.status == "ERROR":
+                    database_payment.status = Payment.STATUS.error
+                elif swish_payment.status == "CANCELLED":
+                    database_payment.status = Payment.STATUS.cancelled
+
+                database_payment.save()
+
             success = True
 
         except ObjectDoesNotExist:
