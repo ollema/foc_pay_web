@@ -1,9 +1,16 @@
+import json
 import logging
 from typing import Union
 
 from django.contrib import messages
 from django.http.request import HttpRequest
-from django.http.response import Http404, HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.http.response import (
+    Http404,
+    HttpResponse,
+    HttpResponseNotAllowed,
+    HttpResponseNotFound,
+    HttpResponseRedirect,
+)
 from django.shortcuts import get_object_or_404, redirect, render
 from swish import SwishError
 
@@ -73,5 +80,9 @@ def update_payment_status(request: HttpRequest, payment_id: str) -> response:
 
 
 def swish_callback(request: HttpRequest) -> response:
-    print(response)
-    return HttpResponse()
+    if request.method != "POST":
+        return HttpResponseNotAllowed(["POST"])
+
+    payment = json.loads(request.body)
+    update_payment_status(request, payment_id=payment["id"])
+    return HttpResponse("OK")
