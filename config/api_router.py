@@ -1,12 +1,12 @@
 from django.conf import settings
-from rest_framework.routers import DefaultRouter, SimpleRouter
+from rest_framework.routers import DefaultRouter
 
 from foc_pay_web.payments.api.views import PaymentViewSet
 
 if settings.DEBUG:
     router = DefaultRouter()
 else:
-    router = SimpleRouter()
+    router = DefaultRouter()
 
 # TODO: add user/account APIs when needed in the future
 # router.register("users", UserViewSet)
