@@ -38,7 +38,9 @@ class PaymentHandler:
         payment = self.client.create_payment(
             amount=amount,
             currency=CURRENCY,
-            callback_url="https://google.com" if settings.DEBUG else "{{ % url 'payments:swish_callback' %}}",
+            callback_url="https://google.com"
+            if settings.DEBUG
+            else f"https://{settings.ALLOWED_HOSTS[0]}" + "{{ % url 'payments:swish_callback' %}}",
             message=MESSAGE,
             payer_alias=payer_alias,
         )
