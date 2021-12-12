@@ -23,7 +23,7 @@ response = Union[HttpResponse, HttpResponseRedirect]
 
 logger = logging.getLogger(__name__)
 
-payment_handler = PaymentHandler(production=True)
+payment_handler = PaymentHandler(production=False)
 
 
 def _payment_form(request: HttpRequest, machine_name: str) -> response:
