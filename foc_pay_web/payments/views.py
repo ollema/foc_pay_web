@@ -12,6 +12,7 @@ from django.http.response import (
     HttpResponseRedirect,
 )
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.csrf import csrf_exempt
 from swish import SwishError
 
 from foc_pay_web.payments.core import PaymentHandler
@@ -79,6 +80,7 @@ def update_payment_status(request: HttpRequest, payment_id: str) -> response:
         return HttpResponseNotFound()
 
 
+@csrf_exempt
 def swish_callback(request: HttpRequest) -> response:
     if request.method != "POST":
         return HttpResponseNotAllowed(["POST"])
