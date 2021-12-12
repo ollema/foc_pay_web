@@ -25,16 +25,24 @@ logger = logging.getLogger(__name__)
 
 payment_handler = PaymentHandler(production=True)
 
+MACHINE_PRICES = {
+    "focumama": 10,
+    "drickomaten": 8,
+}
 
-def _payment_form(request: HttpRequest, machine_name: str) -> response:
+
+def _payment_form(request: HttpRequest, machine_name: str, free_vend: bool = False) -> response:
     if request.method == "POST":
         form = PaymentForm(request.POST)
         if form.is_valid():
             payer_alias = int("46" + form.data["payer_alias"][1:])  # Replace 0 with 46
             try:
+                price = MACHINE_PRICES[machine_name]
+                if free_vend:
+                    price = 1
                 payment = payment_handler.create_payment(
                     payer_alias=payer_alias,
-                    amount=1,  # TODO: take from heroku config
+                    amount=price,
                     machine_name=machine_name,
                 )
             except SwishError as e:
@@ -65,6 +73,10 @@ def focumama_payment_form(request: HttpRequest) -> response:
 
 def drickomaten_payment_form(request: HttpRequest) -> response:
     return _payment_form(request, machine_name=Payment.MACHINES.drickomaten)
+
+
+def focumama_free_vend_form(request: HttpRequest) -> response:
+    return _payment_form(request, machine_name=Payment.MACHINES.focumama, free_vend=True)
 
 
 def get_payment(request: HttpRequest, payment_id: str) -> response:
