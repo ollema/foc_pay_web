@@ -1,5 +1,6 @@
 import swish
-from django.core.exceptions import ObjectDoesNotExist
+from django.conf import settings
+from django.shortcuts import get_object_or_404
 
 from foc_pay_web.payments.models import Payment
 
@@ -37,7 +38,7 @@ class PaymentHandler:
         payment = self.client.create_payment(
             amount=amount,
             currency=CURRENCY,
-            callback_url="https://google.com",
+            callback_url="https://google.com" if settings.DEBUG else "{{ % url 'payments:swish_callback' %}}",
             message=MESSAGE,
             payer_alias=payer_alias,
         )
@@ -53,29 +54,18 @@ class PaymentHandler:
     def update_payment_status(
         self,
         payment_id: str,
-    ) -> bool:
-        success = False
-
+    ) -> None:
+        database_payment: Payment = get_object_or_404(Payment, pk=payment_id)
         swish_payment = self.client.get_payment(payment_request_id=payment_id)
 
-        try:
-            database_payment: Payment = Payment.objects.get(pk=payment_id)
+        if swish_payment.status.lower() != database_payment.STATUS:
+            if swish_payment.status == "PAID":
+                database_payment.status = Payment.STATUS.paid
+            elif swish_payment.status == "DECLINED":
+                database_payment.status = Payment.STATUS.declined
+            elif swish_payment.status == "ERROR":
+                database_payment.status = Payment.STATUS.error
+            elif swish_payment.status == "CANCELLED":
+                database_payment.status = Payment.STATUS.cancelled
 
-            if swish_payment.status.lower() != database_payment.STATUS:
-                if swish_payment.status == "PAID":
-                    database_payment.status = Payment.STATUS.paid
-                elif swish_payment.status == "DECLINED":
-                    database_payment.status = Payment.STATUS.declined
-                elif swish_payment.status == "ERROR":
-                    database_payment.status = Payment.STATUS.error
-                elif swish_payment.status == "CANCELLED":
-                    database_payment.status = Payment.STATUS.cancelled
-
-                database_payment.save()
-
-            success = True
-
-        except ObjectDoesNotExist:
-            print(f"error: was asked to update {payment_id} but could not find it in db")
-
-        return success
+            database_payment.save()

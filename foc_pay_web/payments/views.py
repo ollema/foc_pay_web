@@ -64,9 +64,14 @@ def get_payment(request: HttpRequest, payment_id: str) -> response:
 
 
 def update_payment_status(request: HttpRequest, payment_id: str) -> response:
-    payment_handler.update_payment_status(payment_id)
     try:
+        payment_handler.update_payment_status(payment_id)
         payment = get_object_or_404(Payment, pk=payment_id)
         return render(request, "payments/payment_status.html", context={"payment": payment})
     except Http404:
         return HttpResponseNotFound()
+
+
+def swish_callback(request: HttpRequest) -> response:
+    print(response)
+    return HttpResponse()
