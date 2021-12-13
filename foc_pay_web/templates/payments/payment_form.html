@@ -4,6 +4,9 @@
 {% block title %}{{ page_content.title | title }}{% endblock %}
 
 {% block content %}
+  <style>
+    input {max-width: 12em};
+  </style>
   <h2>{{ page_content.title | title }}</h2>
 
   <button class="btn btn-outline-secondary btn-sm mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
