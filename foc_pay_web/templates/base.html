@@ -47,15 +47,12 @@
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="{% url 'home' %}">Hem <span class="visually-hidden">(current)</span></a>
-              </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'focumama' %}">Focumama</a>
               </li>
-              <li class="nav-item">
+              {{/*  <li class="nav-item">
                 <a class="nav-link" href="{% url 'drickomaten' %}">Drickomaten</a>
-              </li>
+              </li>  */}}
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'focumama_free_vend' %}">Mensskydd</a>
               </li>
@@ -82,7 +79,7 @@
 
       {% block content %}
         <h1>Foc Pay</h1>
-        <p>Use this document as a way to quick start any new project.</p>
+        <p>Foc Pay 2.0 - Next Generation Payment System</p>
       {% endblock content %}
 
     </div> <!-- /container -->
