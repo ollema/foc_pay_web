@@ -1,0 +1,141 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-12-14 00:12+0100\n"
+"PO-Revision-Date: 2021-12-13 21:00+0100\n"
+"Last-Translator: Focumateriet <foc@ftek.se>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: config/settings/base.py:35
+msgid "English"
+msgstr "English"
+
+#: config/settings/base.py:36
+msgid "Swedish"
+msgstr "Svenska"
+
+#: foc_pay_web/payments/apps.py:7
+msgid "Payments"
+msgstr "Betalningar"
+
+#: foc_pay_web/payments/forms.py:9
+msgid "Enter your phone number using this format: '07XXXXXXXX'"
+msgstr "Telefonnumret måste anges i följande format: '07XXXXXXXX'"
+
+#: foc_pay_web/payments/forms.py:12
+msgid "Phone number"
+msgstr "Telefonnummer"
+
+#: foc_pay_web/payments/models.py:9
+msgid "Created"
+msgstr "Skapad"
+
+#: foc_pay_web/payments/models.py:10
+msgid "Paid"
+msgstr "Betalad"
+
+#: foc_pay_web/payments/models.py:11
+msgid "Credited"
+msgstr "Krediterad"
+
+#: foc_pay_web/payments/models.py:12
+msgid "Declined"
+msgstr "Avböjd"
+
+#: foc_pay_web/payments/models.py:13
+msgid "Error"
+msgstr "Fel"
+
+#: foc_pay_web/payments/models.py:14
+msgid "Cancelled"
+msgstr "Avbruten"
+
+#: foc_pay_web/payments/models.py:18
+msgid "None"
+msgstr "-"
+
+#: foc_pay_web/payments/models.py:19 foc_pay_web/payments/views.py:72
+#: foc_pay_web/templates/base.html:55
+msgid "Focumama"
+msgstr "Focumama"
+
+#: foc_pay_web/payments/models.py:20 foc_pay_web/payments/views.py:85
+#: foc_pay_web/templates/base.html:58
+msgid "Drickomaten"
+msgstr "Drickomaten"
+
+#: foc_pay_web/payments/views.py:74 foc_pay_web/payments/views.py:87
+#: foc_pay_web/payments/views.py:104
+msgid "Enter your phone number and open Swish."
+msgstr "Fyll i ditt mobilnummer och öppna Swish."
+
+#: foc_pay_web/payments/views.py:75
+msgid ""
+"When your payment has been processed you are free to select an item from the "
+"machine."
+msgstr ""
+"Efter att din betalning har gått igenom kan du sen välja valfri vara från "
+"sortimentet."
+
+#: foc_pay_web/payments/views.py:88
+msgid ""
+"When your payment has been processed you are free to select a soda from the "
+"machine."
+msgstr ""
+"Efter att din betalning har gått igenom kan du sen välja valfri läsk från "
+"sortimentet."
+
+#: foc_pay_web/payments/views.py:98 foc_pay_web/templates/base.html:61
+msgid "Period products"
+msgstr "Mensskydd"
+
+#: foc_pay_web/payments/views.py:101
+msgid ""
+"With the help of a simple trick you can acquire free period products from "
+"Focumama (while supplies last)."
+msgstr ""
+"Med hjälp av ett busenkelt trick kan du få gratis mensskydd via Focumama (så "
+"länge lagret räcker)."
+
+#: foc_pay_web/payments/views.py:105
+msgid ""
+"<b>IMPORTANT!</b> Do not accept the payment request in Swish - decline it "
+"instead!"
+msgstr ""
+"<b>VIKTIGT!</b> Godkänn inte betalningen i Swish utan tacka vänligt men "
+"bestämt nej."
+
+#: foc_pay_web/payments/views.py:107
+msgid ""
+"When your payment request has been processed you are free to select from "
+"slot EO or slot E1 in Focumama."
+msgstr ""
+"Efter att din betalning gått igenom kan du sen välja från fack E0 eller E1 i "
+"Focumama."
+
+#: foc_pay_web/templates/base.html:64 foc_pay_web/templates/pages/about.html:4
+msgid "Terms of Service"
+msgstr "Villkor"
+
+#: foc_pay_web/templates/payments/payment.html:5
+msgid "Payment Status"
+msgstr "Betalningsstatus"
+
+#: foc_pay_web/templates/payments/payment_form.html:14
+msgid "How-to"
+msgstr "Hur funkar"
+
+#: foc_pay_web/templates/payments/payment_form.html:30
+msgid "Pay"
+msgstr "Betala"

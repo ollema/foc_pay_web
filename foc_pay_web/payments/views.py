@@ -1,5 +1,4 @@
 import json
-import logging
 from typing import Dict, Union
 
 from django.contrib import messages
@@ -12,6 +11,7 @@ from django.http.response import (
     HttpResponseRedirect,
 )
 from django.shortcuts import redirect, render
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
 from swish import SwishError
 
@@ -21,14 +21,7 @@ from foc_pay_web.payments.models import Payment
 
 response = Union[HttpResponse, HttpResponseRedirect]
 
-logger = logging.getLogger(__name__)
-
-payment_handler = PaymentHandler(production=True)
-
-MACHINE_PRICES = {
-    "focumama": 10,
-    "drickomaten": 8,
-}
+payment_handler = PaymentHandler()
 
 
 def _payment_form(
@@ -47,7 +40,6 @@ def _payment_form(
                     machine_name=machine_name,
                 )
             except SwishError as e:
-                logger.error(e.error_message)
                 messages.add_message(request, messages.ERROR, e.error_message)
                 form = PaymentForm(request.POST)
                 return render(
@@ -77,10 +69,10 @@ def focumama_payment_form(request: HttpRequest) -> response:
     price = 10
     machine_name = Payment.MACHINES.focumama
     page_content = {
-        "title": "Focumama",
+        "title": _("Focumama"),
         "help_text": [
-            "Fyll i ditt mobilnummer och öppna Swish.",
-            "Efter att din betalning har gått igenom kan du sen välja valfri vara från sortimentet.",
+            _("Enter your phone number and open Swish."),
+            _("When your payment has been processed you are free to select an item from the machine."),
         ],
     }
     return _payment_form(request, price=price, machine_name=machine_name, page_content=page_content)
@@ -90,10 +82,10 @@ def drickomaten_payment_form(request: HttpRequest) -> response:
     price = 8
     machine_name = Payment.MACHINES.drickomaten
     page_content = {
-        "title": "Drickomaten",
+        "title": _("Drickomaten"),
         "help_text": [
-            "Fyll i ditt mobilnummer och öppna.",
-            "Efter att din betalning har gått igenom kan du sen välja valfri vara från sortimentet.",
+            _("Enter your phone number and open Swish."),
+            _("When your payment has been processed you are free to select a soda from the machine."),
         ],
     }
     return _payment_form(request, price=price, machine_name=machine_name, page_content=page_content)
@@ -103,12 +95,18 @@ def focumama_free_vend_form(request: HttpRequest) -> response:
     price = 1
     machine_name = Payment.MACHINES.focumama
     page_content = {
-        "title": "Mensskydd",
+        "title": _("Period products"),
         "help_text": [
-            "Med hjälp av ett busenkelt trick kan du få gratis mensskydd via Focumama (så länge lagret räcker).",
-            "Fyll i ditt mobilnummer och öppna sen Swish.",
-            "<b>VIKTIGT!</b> Godkänn inte betalningen i Swish utan tacka vänligt men bestämt nej.",
-            "Efter att din betalning gått igenom kan du sen välja från fack E0 eller E1 i Focumama.",
+            _(
+                "With the help of a simple trick you can acquire free period products from Focumama "
+                "(while supplies last)."
+            ),
+            _("Enter your phone number and open Swish."),
+            _("<b>IMPORTANT!</b> Do not accept the payment request in Swish - decline it instead!"),
+            _(
+                "When your payment request has been processed you are free to select from slot EO or "
+                "slot E1 in Focumama."
+            ),
         ],
     }
     return _payment_form(request, price=price, machine_name=machine_name, page_content=page_content)

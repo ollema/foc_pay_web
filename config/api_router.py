@@ -8,8 +8,6 @@ if settings.DEBUG:
 else:
     router = SimpleRouter()
 
-# TODO: add user/account APIs when needed in the future
-# router.register("users", UserViewSet)
 router.register("payments", PaymentViewSet)
 
 app_name = "api"

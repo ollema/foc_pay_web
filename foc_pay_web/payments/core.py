@@ -5,30 +5,15 @@ from django.urls import reverse
 
 from foc_pay_web.payments.models import Payment
 
+SWISH_NUMBER = "1230814343"
+CERT_PATH = (".certs/prod/cert.pem", ".certs/prod/swish.key")
 CURRENCY = "SEK"
-MESSAGE = "GET HIPPER WITH FLIPPER. GET LOOSE WITH BOOZE"
-
-
-swish_prod_client = swish.SwishClient(
-    environment=swish.Environment.Production,
-    merchant_swish_number="1230814343",
-    cert=(".certs/prod/cert.pem", ".certs/prod/swish.key"),
-    verify=True,
-)
-
-swish_test_client = swish.SwishClient(
-    environment=swish.Environment.Test,
-    merchant_swish_number="1231181189",
-    cert=(".certs/test/cert.pem", ".certs/test/swish.key"),
-)
+MESSAGE = "GET HIPPER WITH FLIPPER."
 
 
 class PaymentHandler:
-    def __init__(self, production: bool = False) -> None:
-        if production:
-            self.client = swish_prod_client
-        else:
-            self.client = swish_test_client
+    def __init__(self) -> None:
+        self.client = swish.SwishClient("production", SWISH_NUMBER, CERT_PATH, True)
 
     def create_payment(
         self,
@@ -37,8 +22,8 @@ class PaymentHandler:
         machine_name: str,
     ) -> Payment:
         debug_callback_url = "https://google.com"
-        prod_callback_url = f"https://{settings.ALLOWED_HOSTS[0]}{reverse('payments:swish_callback')}"
-        callback_url = debug_callback_url if settings.DEBUG else prod_callback_url
+        callback_url = f"https://{settings.ALLOWED_HOSTS[0]}{reverse('payments:swish_callback')}"
+        callback_url = debug_callback_url if settings.DEBUG else callback_url
 
         swish_payment = self.client.create_payment(
             amount=amount,

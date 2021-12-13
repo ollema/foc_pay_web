@@ -13,14 +13,11 @@ urlpatterns = [
     path("about/", TemplateView.as_view(template_name="pages/about.html"), name="about"),
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
-    # TODO: add user/account URLs when needed in the future
-    # User management
-    # path("users/", include("foc_pay_web.users.urls", namespace="users")),
-    # path("accounts/", include("allauth.urls")),
     path("focumama/", view=focumama_payment_form, name="focumama"),
     # path("drickomaten/", view=drickomaten_payment_form, name="drickomaten"),
     path("free_vend/", view=focumama_free_vend_form, name="focumama_free_vend"),
     path("payments/", include("foc_pay_web.payments.urls", namespace="payments")),
+    path("i18n/", include("django.conf.urls.i18n")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # API URLS

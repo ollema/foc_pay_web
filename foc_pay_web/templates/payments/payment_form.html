@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% load i18n %}
 
 {% block title %}{{ page_content.title | title }}{% endblock %}
 
@@ -10,7 +11,7 @@
   <h2>{{ page_content.title | title }}</h2>
 
   <button class="btn btn-outline-secondary btn-sm mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-    Hur funkar {{ page_content.title }}?
+    {% trans "How-to" %} {{ page_content.title }}?
   </button>
 
   <div class="collapse" id="collapseExample">
@@ -26,7 +27,7 @@
     {{ form|crispy }}
     <div class="control-group">
       <div class="controls">
-        <button type="submit" class="btn btn-secondary">Betala</button>
+        <button type="submit" class="btn btn-secondary">{% trans "Pay" %}</button>
       </div>
     </div>
   </form>

@@ -52,16 +52,16 @@
             <ul class="navbar-nav mr-auto">
               {% with url_name=request.resolver_match.url_name %}
               <li class="nav-item">
-                <a class="nav-link {% if url_name == 'focumama' %}active{% endif %}" href="{% url 'focumama' %}">Focumama</a>
+                <a class="nav-link {% if url_name == 'focumama' %}active{% endif %}" href="{% url 'focumama' %}">{% trans "Focumama" %}</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link disabled" href="#">Drickomaten</a>
+                <a class="nav-link disabled" href="#">{% trans "Drickomaten" %}</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link {% if url_name == 'focumama_free_vend' %}active{% endif %}" href="{% url 'focumama_free_vend' %}">Mensskydd</a>
+                <a class="nav-link {% if url_name == 'focumama_free_vend' %}active{% endif %}" href="{% url 'focumama_free_vend' %}">{% trans "Period products" %}</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link {% if url_name == 'about' %}active{% endif %}" href="{% url 'about' %}">Villkor</a>
+                <a class="nav-link {% if url_name == 'about' %}active{% endif %}" href="{% url 'about' %}">{% trans "Terms of Service" %}</a>
               </li>
               {% endwith %}
             </ul>
@@ -88,6 +88,28 @@
       {% endblock content %}
 
     </div> <!-- /container -->
+
+    <footer class="footer">
+      <div class="container">
+        {% get_current_language as LANGUAGE_CODE %}
+        {% if "en-us" == LANGUAGE_CODE %}
+          <form action="{% url 'set_language' %}" method="post" id="form_sv" style="display:inline!important;">
+          {% csrf_token %}
+            <input name="next" type="hidden" value="{{ redirect_to }}" />
+            <input name="language" type="hidden" value="sv" />
+          </form>
+          <button class="btn" type="submit" form="form_sv" value="submit">🇸🇪</button>
+        {% endif %}
+        {% if "sv-se" == LANGUAGE_CODE %}
+          <form action="{% url 'set_language' %}" method="post" id="form_en" style="display:inline!important;">
+          {% csrf_token %}
+            <input name="next" type="hidden" value="{{ redirect_to }}" />
+            <input name="language" type="hidden" value="en" />
+          </form>
+          <button class="btn" type="submit" form="form_en" value="submit">🇬🇧</button>
+        {% endif %}
+        </div>
+    </footer>
 
     {% block modal %}{% endblock modal %}
 
