@@ -1,6 +1,6 @@
 import json
 import logging
-from typing import Union
+from typing import Dict, Union
 
 from django.contrib import messages
 from django.http.request import HttpRequest
@@ -11,7 +11,7 @@ from django.http.response import (
     HttpResponseNotFound,
     HttpResponseRedirect,
 )
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
 from swish import SwishError
 
@@ -31,17 +31,18 @@ MACHINE_PRICES = {
 }
 
 
-def _payment_form(request: HttpRequest, machine_name: str, free_vend: bool = False) -> response:
+def _payment_form(
+    request: HttpRequest,
+    price: int,
+    machine_name: str,
+    page_content: Dict[str, str],
+) -> response:
     if request.method == "POST":
         form = PaymentForm(request.POST)
         if form.is_valid():
-            payer_alias = int("46" + form.data["payer_alias"][1:])  # Replace 0 with 46
             try:
-                price = MACHINE_PRICES[machine_name]
-                if free_vend:
-                    price = 1
                 payment = payment_handler.create_payment(
-                    payer_alias=payer_alias,
+                    payer_alias=int("46" + form.data["payer_alias"][1:]),  # Replace 0 with 46
                     amount=price,
                     machine_name=machine_name,
                 )
@@ -52,41 +53,75 @@ def _payment_form(request: HttpRequest, machine_name: str, free_vend: bool = Fal
                 return render(
                     request,
                     "payments/payment_form.html",
-                    context={"form": form, "machine_name": machine_name},
+                    context={
+                        "form": form,
+                        "page_content": page_content,
+                    },
                 )
 
             return redirect(f"/payments/{payment.payment_id}")
-
     else:
         form = PaymentForm()
 
     return render(
         request,
         "payments/payment_form.html",
-        context={"form": form, "machine_name": machine_name},
+        context={
+            "form": form,
+            "page_content": page_content,
+        },
     )
 
 
 def focumama_payment_form(request: HttpRequest) -> response:
-    return _payment_form(request, machine_name=Payment.MACHINES.focumama)
+    price = 10
+    machine_name = Payment.MACHINES.focumama
+    page_content = {
+        "title": "Focumama",
+        "help_text": [
+            "Fyll i ditt mobilnummer och öppna Swish.",
+            "Efter att din betalning har gått igenom kan du sen välja valfri vara från sortimentet.",
+        ],
+    }
+    return _payment_form(request, price=price, machine_name=machine_name, page_content=page_content)
 
 
 def drickomaten_payment_form(request: HttpRequest) -> response:
-    return _payment_form(request, machine_name=Payment.MACHINES.drickomaten)
+    price = 8
+    machine_name = Payment.MACHINES.drickomaten
+    page_content = {
+        "title": "Drickomaten",
+        "help_text": [
+            "Fyll i ditt mobilnummer och öppna.",
+            "Efter att din betalning har gått igenom kan du sen välja valfri vara från sortimentet.",
+        ],
+    }
+    return _payment_form(request, price=price, machine_name=machine_name, page_content=page_content)
 
 
 def focumama_free_vend_form(request: HttpRequest) -> response:
-    return _payment_form(request, machine_name=Payment.MACHINES.focumama, free_vend=True)
+    price = 1
+    machine_name = Payment.MACHINES.focumama
+    page_content = {
+        "title": "Mensskydd",
+        "help_text": [
+            "Med hjälp av ett busenkelt trick kan du få gratis mensskydd via Focumama (så länge lagret räcker).",
+            "Fyll i ditt mobilnummer och öppna sen Swish.",
+            "<b>VIKTIGT!</b> Godkänn inte betalningen i Swish utan tacka vänligt men bestämt nej.",
+            "Efter att din betalning gått igenom kan du sen välja från fack E0 eller E1 i Focumama.",
+        ],
+    }
+    return _payment_form(request, price=price, machine_name=machine_name, page_content=page_content)
 
 
-def get_payment(request: HttpRequest, payment_id: str) -> response:
+def payment(request: HttpRequest, payment_id: str) -> response:
     return render(request, "payments/payment.html", context={"payment_id": payment_id})
 
 
 def update_payment_status(request: HttpRequest, payment_id: str) -> response:
     try:
         payment_handler.update_payment_status(payment_id)
-        payment = get_object_or_404(Payment, pk=payment_id)
+        payment = Payment.objects.get(pk=payment_id)
         return render(request, "payments/payment_status.html", context={"payment": payment})
     except Http404:
         return HttpResponseNotFound()

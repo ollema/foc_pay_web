@@ -1,16 +1,29 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
-{% block title %}{{ machine_name | title }}{% endblock %}
+{% block title %}{{ page_content.title | title }}{% endblock %}
 
 {% block content %}
-  <h2>{{ machine_name | title }}</h2>
-  <form class="form-horizontal" method="post">
+  <h2>{{ page_content.title | title }}</h2>
+
+  <button class="btn btn-outline-secondary btn-sm mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    Hur funkar {{ page_content.title }}?
+  </button>
+
+  <div class="collapse" id="collapseExample">
+    <div class="card card-body my-2">
+    {% for help_line in page_content.help_text %}
+      <p class="my-1">{{ help_line | safe}}</p>
+    {% endfor %}
+    </div>
+  </div>
+
+  <form class="form-horizontal mt-3" method="post">
     {% csrf_token %}
     {{ form|crispy }}
     <div class="control-group">
       <div class="controls">
-        <button type="submit" class="btn btn-primary">Betala</button>
+        <button type="submit" class="btn btn-secondary">Betala</button>
       </div>
     </div>
   </form>
