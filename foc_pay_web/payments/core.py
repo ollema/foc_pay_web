@@ -37,7 +37,7 @@ class PaymentHandler:
         return Payment.objects.create(
             payment_id=swish_payment.id,
             payer_alias=swish_payment.payer_alias,
-            amount=swish_payment.amount,
+            amount=int(swish_payment.amount),
             machine=machine_name,
         )
 

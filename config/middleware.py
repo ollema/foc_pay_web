@@ -39,6 +39,10 @@ class SimpleLocaleMiddleware(MiddlewareMixin):
                 except LookupError:
                     pass
 
+        # always use english on admin site
+        if request.path.lstrip("/").startswith(settings.ADMIN_URL.lstrip("/")):
+            language = "en-US"
+
         translation.activate(language)
         request.LANGUAGE_CODE = translation.get_language()
 
