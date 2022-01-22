@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-14 00:12+0100\n"
+"POT-Creation-Date: 2022-01-22 10:24+0100\n"
 "PO-Revision-Date: 2021-12-13 21:00+0100\n"
 "Last-Translator: Focumateriet <foc@ftek.se>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,13 +29,21 @@ msgstr "Svenska"
 msgid "Payments"
 msgstr "Betalningar"
 
-#: foc_pay_web/payments/forms.py:9
+#: foc_pay_web/payments/forms.py:12
 msgid "Enter your phone number using this format: '07XXXXXXXX'"
 msgstr "Telefonnumret måste anges i följande format: '07XXXXXXXX'"
 
-#: foc_pay_web/payments/forms.py:12
+#: foc_pay_web/payments/forms.py:15
 msgid "Phone number"
 msgstr "Telefonnummer"
+
+#: foc_pay_web/payments/forms.py:26
+msgid ""
+"Another payment is already in progress!\n"
+"Contact Foc (foc@ftek.se) if the machine is not responding."
+msgstr ""
+"Det finns redan en betalning igång!\n"
+"Kontakta ditt lokala Focumateri (foc@ftek.se) om maskinen har hängt sig eller krånglar."
 
 #: foc_pay_web/payments/models.py:9
 msgid "Created"

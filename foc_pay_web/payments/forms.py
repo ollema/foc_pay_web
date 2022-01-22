@@ -24,6 +24,6 @@ class PaymentForm(forms.Form):
             raise ValidationError(
                 _(
                     "Another payment is already in progress!"
-                    "Contact Foc (foc@ftek.se) if the machine is not responding."
+                    "\nContact Foc (foc@ftek.se) if the machine is not responding."
                 )
             )
