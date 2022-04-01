@@ -55,7 +55,7 @@
                 <a class="nav-link {% if url_name == 'focumama' %}active{% endif %}" href="{% url 'focumama' %}">{% trans "Focumama" %}</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link disabled" href="#">{% trans "Drickomaten" %}</a>
+                <a class="nav-link {% if url_name == 'drickomaten' %}active{% endif %}" href="{% url 'drickomaten' %}">{% trans "Drickomaten" %}</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link {% if url_name == 'focumama_free_vend' %}active{% endif %}" href="{% url 'focumama_free_vend' %}">{% trans "Period products" %}</a>

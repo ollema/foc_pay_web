@@ -16,7 +16,7 @@ from django.views.decorators.csrf import csrf_exempt
 from swish import SwishError
 
 from foc_pay_web.payments.core import PaymentHandler
-from foc_pay_web.payments.forms import PaymentForm
+from foc_pay_web.payments.forms import DrickPaymentForm, FocumamaPaymentForm
 from foc_pay_web.payments.models import Payment
 
 response = Union[HttpResponse, HttpResponseRedirect]
@@ -31,7 +31,11 @@ def _payment_form(
     page_content: Dict[str, str],
 ) -> response:
     if request.method == "POST":
-        form = PaymentForm(request.POST)
+        if machine_name == Payment.MACHINES.focumama:
+            form = FocumamaPaymentForm(request.POST)
+        if machine_name == Payment.MACHINES.drickomaten:
+            form = DrickPaymentForm(request.POST)
+
         if form.is_valid():
             try:
                 payment = payment_handler.create_payment(
@@ -41,7 +45,10 @@ def _payment_form(
                 )
             except SwishError as e:
                 messages.add_message(request, messages.ERROR, e.error_message)
-                form = PaymentForm(request.POST)
+                if machine_name == Payment.MACHINES.focumama:
+                    form = FocumamaPaymentForm(request.POST)
+                if machine_name == Payment.MACHINES.drickomaten:
+                    form = DrickPaymentForm(request.POST)
                 return render(
                     request,
                     "payments/payment_form.html",
@@ -53,7 +60,10 @@ def _payment_form(
 
             return redirect(f"/payments/{payment.payment_id}")
     else:
-        form = PaymentForm()
+        if machine_name == Payment.MACHINES.focumama:
+            form = FocumamaPaymentForm(request.POST)
+        if machine_name == Payment.MACHINES.drickomaten:
+            form = DrickPaymentForm(request.POST)
 
     return render(
         request,
