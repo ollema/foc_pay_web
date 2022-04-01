@@ -61,9 +61,9 @@ def _payment_form(
             return redirect(f"/payments/{payment.payment_id}")
     else:
         if machine_name == Payment.MACHINES.focumama:
-            form = FocumamaPaymentForm(request.POST)
+            form = FocumamaPaymentForm()
         if machine_name == Payment.MACHINES.drickomaten:
-            form = DrickPaymentForm(request.POST)
+            form = DrickPaymentForm()
 
     return render(
         request,
