@@ -17,25 +17,3 @@ repos:
     rev: 22.6.0
     hooks:
       - id: black
-
-  - repo: https://github.com/PyCQA/isort
-    rev: 5.10.1
-    hooks:
-      - id: isort
-
-  - repo: https://github.com/PyCQA/flake8
-    rev: 5.0.4
-    hooks:
-      - id: flake8
-        args: ["--config=setup.cfg"]
-
-  - repo: https://github.com/asottile/yesqa
-    rev: v1.4.0
-    hooks:
-    -   id: yesqa
-
-# sets up .pre-commit-ci.yaml to ensure pre-commit dependencies stay up to date
-ci:
-  autoupdate_schedule: weekly
-  skip: []
-  submodules: false
